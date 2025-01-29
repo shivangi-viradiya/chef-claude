@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import React from "react";
 import ClaudeRecipe from "./ClaudeRecipe";
 import IngredientsList from "./IngredientsList";
@@ -12,6 +12,8 @@ const Main = () => {
   ]);
 
   const [receipeShown, setReceipeShown] = useState(false);
+  const receipeSection = useRef(null);
+  console.log(receipeSection);
 
   const addIngredient = (formdata) => {
     // event.preventDefault();
@@ -19,6 +21,12 @@ const Main = () => {
     const newingredient = formdata.get("ingredient");
     setingredients((preingredient) => [...preingredient, newingredient]);
   };
+
+  useEffect(() => {
+    if(receipeShown !== "" && receipeSection.current !== null){
+      receipeSection.current.scrollIntoView({behavior: "smooth"});
+    }
+  }, [receipeShown]);
 
   const showData = () => {
     setReceipeShown((preShown) => !preShown);
@@ -34,7 +42,11 @@ const Main = () => {
         <button>Add ingredient</button>
       </form>
       {ingredients.length > 0 ? (
-        <IngredientsList ingredients={ingredients} showData={showData} />
+        <IngredientsList
+          ingredients={ingredients}
+          showData={showData}
+          receipeSection={receipeSection}
+        />
       ) : null}
       {receipeShown && <ClaudeRecipe />}
     </main>

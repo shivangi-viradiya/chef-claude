@@ -1,4 +1,4 @@
-const IngredientsList = ({ ingredients, showData }) => {
+const IngredientsList = ({ ingredients, showData, receipeSection }) => {
   const ingredientsList = ingredients.map((item, index) => {
     return <li key={index.toString()}>{item}</li>;
   });
@@ -11,7 +11,7 @@ const IngredientsList = ({ ingredients, showData }) => {
       </ul>
       {ingredients.length > 3 ? (
         <div className="get-recipe-container">
-          <div>
+          <div ref={receipeSection}>
             <h3>Ready for a recipe?</h3>
             <p>Generate a recipe from your list of ingredients.</p>
           </div>
